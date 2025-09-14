@@ -17,7 +17,7 @@ const config = {
 		}),
 
 		paths: {
-			base: 'mambano5-website'
+			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
 		}
 	}
 };
