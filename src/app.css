@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+html {
+  font-size: 2vh; /* Or any desired base font size */
+}
+
 .table {
     display: flex;
     flex-direction: column;
@@ -8,13 +12,4 @@
 
 .row {
     display: flex;
-}
-
-.row > div {
-    width: 50%;
-    border: 1px solid black;
-}
-
-.chartContainer {
-    width: max(60vh, 50%);
 }

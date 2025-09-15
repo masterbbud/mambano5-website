@@ -1,18 +1,21 @@
 
 <script>
+// @ts-nocheck
+
 
     import Chart from 'chart.js/auto';
     import { onMount } from 'svelte';
-    import { dayFromDate, weekFromDate } from './utils';
+    import { dayFromDate, weekFromDate, userToColor} from './utils';
 
-    const { mode, data, currentWeek } = $props();
+    const { data, currentWeek } = $props();
+    
+    var selectedChartMode = $state("week");
 
-    const userToColor = {
-        Anthony: '255, 28, 0',
-        Brandon: '255, 90, 0',
-        Catie: '0, 169, 200',
-        Danny: '0, 158, 255',
-        Ivan: '168, 0, 255'
+    const modeToTitle = {
+        week: 'Individual Contributions, by Week',
+        day: 'Individual Contributions, by Day',
+        cumulative: 'Cumulative Individual Contributions',
+        combined: 'Team Contributions, by Week',
     }
 
     let ctx;
@@ -20,16 +23,20 @@
     let chartRef;
 
     $effect(() => {
-        if (currentWeek && data && mode) {
+        if (currentWeek && data) {
             refreshData();
         }
     })
+
+    function selectChartMode(mode) {
+        selectedChartMode = mode;
+    }
 
     function refreshData() {
         ctx = chartCanvas.getContext('2d');
         let datasets;
         
-        if (mode == 'combined') {
+        if (selectedChartMode == 'combined') {
             datasets = [{
                 label: 'Team',
                 backgroundColor: 'rgba(38, 209, 0, 0.1)',
@@ -49,7 +56,7 @@
             })
         }
         let labels;
-        if (mode == 'week' || mode == 'combined') {
+        if (selectedChartMode == 'week' || selectedChartMode == 'combined') {
             labels = [...Array(currentWeek + 1).keys()].map(e => `Week ${e}`);
         } else {
             labels = [];
@@ -76,7 +83,7 @@
                         y: {
                             beginAtZero: true
                         }
-                    }
+                    },
                 }
             })
         }
@@ -84,12 +91,12 @@
 
     function getUserData(user) {
         const userData = data.filter(e => e.Name == user);
-        if (mode == 'week') {
+        if (selectedChartMode == 'week') {
             return [...Array(currentWeek + 1).keys()].map(w => userData.filter(e => weekFromDate(Date.parse(e.Date)) == w).reduce((sum, b) => (sum + b.Time), 0));
         }
-        else if (mode == 'day') {
+        else if (selectedChartMode == 'day') {
             return [...Array(dayFromDate(Date.now()) + 1).keys()].map(d => userData.filter(e => dayFromDate(Date.parse(e.Date)) == d).reduce((sum, b) => (sum + b.Time), 0));
-        } else if (mode == 'cumulative') {
+        } else if (selectedChartMode == 'cumulative') {
             let cumDays = [];
             let lastVal = 0;
             for (let d = 0; d < dayFromDate(Date.now()) + 1; d ++) {
@@ -106,7 +113,17 @@
 
 </script>
 
-<div>Displaying in {mode} mode</div>
-<div class="chartContainer">
-<canvas bind:this={chartCanvas} id="timeTrackingChart" ></canvas>
+<div class="p-8 pb-0 flex justify-between items-end">
+    <span class="text-2xl font-bold">{modeToTitle[selectedChartMode]}</span>
+    <span class="float-right">
+        <select onchange={evt => selectChartMode(evt.target.value)}>
+            <option value="week">Weeks</option>
+            <option value="day">Days</option>
+            <option value="cumulative">Cumulative</option>
+            <option value="combined">Combined (Team)</option>
+        </select>
+    </span>
+</div>
+<div class="p-4 relative">
+    <canvas bind:this={chartCanvas} id="timeTrackingChart" ></canvas>
 </div>
