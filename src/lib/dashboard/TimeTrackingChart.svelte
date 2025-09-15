@@ -27,17 +27,29 @@
 
     function refreshData() {
         ctx = chartCanvas.getContext('2d');
-        let datasets = Object.keys(userToColor).map(name => {
-            return {
-                label: name,
-                backgroundColor: `rgba(${userToColor[name]}, 0.1)`,
-                borderColor: `rgb(${userToColor[name]})`,
+        let datasets;
+        
+        if (mode == 'combined') {
+            datasets = [{
+                label: 'Team',
+                backgroundColor: 'rgba(38, 209, 0, 0.1)',
+                borderColor: 'rgb(38, 209, 0)',
                 fill: true,
-                data: getUserData(name),
-            }
-        })
+                data: getTeamData()
+            }]
+        } else {
+            datasets = Object.keys(userToColor).map(name => {
+                return {
+                    label: name,
+                    backgroundColor: `rgba(${userToColor[name]}, 0.1)`,
+                    borderColor: `rgb(${userToColor[name]})`,
+                    fill: true,
+                    data: getUserData(name),
+                }
+            })
+        }
         let labels;
-        if (mode == 'week') {
+        if (mode == 'week' || mode == 'combined') {
             labels = [...Array(currentWeek + 1).keys()].map(e => `Week ${e}`);
         } else {
             labels = [];
@@ -86,6 +98,10 @@
             }
             return cumDays;
         }
+    }
+
+    function getTeamData() {
+        return [...Array(currentWeek + 1).keys()].map(w => data.filter(e => weekFromDate(Date.parse(e.Date)) == w).reduce((sum, b) => (sum + b.Time), 0));
     }
 
 </script>

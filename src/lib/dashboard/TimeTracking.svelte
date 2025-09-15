@@ -101,6 +101,7 @@
         <option value="week">Weeks</option>
         <option value="day">Days</option>
         <option value="cumulative">Cumulative</option>
+        <option value="combined">Combined (Team)</option>
     </select>
     {#if selectedUser}
         <TimeTrackingGraph name={selectedUser} data={selectedUserData} />
