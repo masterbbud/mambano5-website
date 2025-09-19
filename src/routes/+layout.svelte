@@ -5,7 +5,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<title>AcademiAfrica Dashboard</title>
+	<title>Bidiinet Dashboard</title>
 </svelte:head>
 
 <slot />
