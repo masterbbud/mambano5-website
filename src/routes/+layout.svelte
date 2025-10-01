@@ -5,7 +5,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<title>Bidiinet Dashboard</title>
+	<title>BidiiNet Dashboard</title>
 </svelte:head>
 
 <slot />
