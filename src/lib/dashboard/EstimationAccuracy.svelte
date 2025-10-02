@@ -30,7 +30,7 @@
 
     async function loadMetricData(data) {
         estimationData = data.sort((a, b) => a.Week - b.Week);
-        currentSprint = Math.floor(weekFromDate(Date.now()) / 2) - 1 + 5;
+        currentSprint = Math.floor(weekFromDate(Date.now()) / 2) - 1;
     }
 
 </script>
