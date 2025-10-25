@@ -28,14 +28,14 @@
         ctx = chartCanvas.getContext('2d');
         let datasets;
         
-        datasets = Object.keys(submoduleToColor).map(name => {
+        datasets = getSubmodules().map(name => {
             return {
                 label: name,
-                backgroundColor: `rgba(${submoduleToColor[name]}, 0.1)`,
-                borderColor: `rgb(${submoduleToColor[name]})`,
+                backgroundColor: `hsla(${deterministicColor(name)}, 0.1)`,
+                borderColor: `hsl(${deterministicColor(name)})`,
                 fill: name == 'Goal',
                 borderWidth: ['Goal', 'Total'].includes(name) ? 3 : 1,
-                pointRadius: ['Goal', 'Total'].includes(name) ? 2 : 0,
+                pointRadius: ['Goal', 'Total'].includes(name) ? 2 : 1,
                 data: getSubmoduleData(name),
             }
         })
@@ -64,13 +64,13 @@
         
         datasets = [{
             label: 'Code Coverage',
-            data: Object.keys(submoduleToColor).map(name => getRecentData(name)),
-            backgroundColor: Object.keys(submoduleToColor).map(name => `rgba(${submoduleToColor[name]}, 0.1)`),
-            borderColor: Object.keys(submoduleToColor).map(name => `rgba(${submoduleToColor[name]})`),
+            data: getSubmodules().map(name => getRecentData(name)),
+            backgroundColor: getSubmodules().map(name => `hsla(${deterministicColor(name)}, 0.1)`),
+            borderColor: getSubmodules().map(name => `hsl(${deterministicColor(name)})`),
             fill: true,
             borderWidth: 1,
         }]
-        let labels = Object.keys(submoduleToColor);
+        let labels = getSubmodules();
         if (barsRef != null) {
             barsRef.data.datasets = datasets;
             barsRef.data.labels = labels;
@@ -94,6 +94,7 @@
     }
 
     function getRecentData(name) {
+        console.log(name);
         if (name == "Goal") {
             return 80;
         }
@@ -104,6 +105,36 @@
         }
         return 0;
     }
+
+    function getSubmodules() {
+        return ["Goal", ...Object.keys(data[0]).slice(2)];
+    }
+
+    function mulberry32(seed) {
+        let t = seed + 0x6D2B79F48;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    }
+
+    // Deterministic HSL color generator
+    function deterministicColor(string) {
+        const random = mulberry32(generateHash(string));
+        const hue = Math.floor(random * 360);
+        const saturation = 100;
+        const lightness = 50;
+        return `${hue}, ${saturation}%, ${lightness}%`;
+    }
+
+    function generateHash(string) {
+        let hash = 0;
+        for (const char of string) {
+            hash = (hash << 5) - hash + char.charCodeAt(0);
+            hash |= 0; // Constrain to 32bit integer
+        }
+        return hash;
+    }
+
 
 </script>
 
