@@ -59,6 +59,13 @@
                     labels: labels,
                     datasets: datasets
                 },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                }
             })
         }
     }
@@ -88,6 +95,13 @@
                     labels: labels,
                     datasets: datasets
                 },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                }
             })
         }
     }

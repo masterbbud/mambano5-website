@@ -81,7 +81,7 @@
                 data: {
                     labels: labels,
                     datasets: datasets
-                },
+                }
             })
         }
     }
