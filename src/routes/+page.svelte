@@ -4,8 +4,14 @@
 
     import TimeTracking from "$lib/dashboard/TimeTracking.svelte";
     import TeamMember from "$lib/dashboard/TeamMember.svelte";
-    import PhillippaIcon from "$lib/assets/phillippa.jpg";
-    import RichardIcon from "$lib/assets/richard.jpg";
+    import PhillippaIcon from "$lib/assets/pfp/phillippa.jpg";
+    import EmiliaIcon from "$lib/assets/pfp/emilia.png";
+    import RichardIcon from "$lib/assets/pfp/richard.jpg";
+    import AnthonyIcon from "$lib/assets/pfp/anthony.png";
+    import BrandonIcon from "$lib/assets/pfp/brandon.png";
+    import CatieIcon from "$lib/assets/pfp/catie.png";
+    import DannyIcon from "$lib/assets/pfp/danny.png";
+    import IvanIcon from "$lib/assets/pfp/ivan.png";
     import PlaceholderIcon from "$lib/assets/placeholder.webp";
 
     import { userToColor } from "$lib/dashboard/utils";
@@ -54,13 +60,13 @@
         <p class="mb-6 lg:mb-4 text-lg lg:text-base">At the end of this project, a minimum viable product will be deployed in order to allow select English-speaking African universities to test the effectiveness of the platform. This release may not include the full set of necessary features on the platform, but will be built with regard to maintainability and scalability for a future production deployment.</p>
         <h2 class="mb-4 lg:mb-2 text-3xl lg:text-xl text-center lg:text-start font-semibold">Contributors</h2>
         <TeamMember name="Phillippa Thiuri" role="Project Sponsor" color="14, 138, 0" image={PhillippaIcon} />
-        <TeamMember name="Emilia Thiuri" role="Project Sponsor" color="14, 138, 0" image={PlaceholderIcon} />
+        <TeamMember name="Emilia Thiuri" role="Project Sponsor" color="14, 138, 0" image={EmiliaIcon} />
         <TeamMember name="Richard Hanulewicz" role="Project Coach" color="158, 99, 5" image={RichardIcon} />
-        <TeamMember name="Anthony Mackay" role="UI Jesus" color={userToColor.Anthony} image={PlaceholderIcon} />
-        <TeamMember name="Brandon Faunce" role="Communication Lead" color={userToColor.Brandon} image={PlaceholderIcon} />
-        <TeamMember name="Catie Roe" role="Dedicated Scribe" color={userToColor.Catie} image={PlaceholderIcon} />
-        <TeamMember name="Danny Gramowski" role="Project Lead" color={userToColor.Danny} image={PlaceholderIcon} />
-        <TeamMember name="Ivan Lin" role="Deployment Diva" color={userToColor.Ivan} image={PlaceholderIcon} />
+        <TeamMember name="Anthony Mackay" role="UI Jesus" color={userToColor.Anthony} image={AnthonyIcon} />
+        <TeamMember name="Brandon Faunce" role="Communication Lead" color={userToColor.Brandon} image={BrandonIcon} />
+        <TeamMember name="Catie Roe" role="Dedicated Scribe" color={userToColor.Catie} image={CatieIcon} />
+        <TeamMember name="Danny Gramowski" role="Project Lead" color={userToColor.Danny} image={DannyIcon} />
+        <TeamMember name="Ivan Lin" role="Deployment Diva" color={userToColor.Ivan} image={IvanIcon} />
     </div>
     <div id="metric-tabs" class="p-4 flex flex-col lg:h-screen w-full max-w-screen">
         <div id="tab-selector" class="max-w-screen overflow-x-auto min-h-min">
